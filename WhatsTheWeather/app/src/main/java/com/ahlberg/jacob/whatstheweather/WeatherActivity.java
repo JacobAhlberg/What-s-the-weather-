@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONObject;
 
@@ -21,22 +22,30 @@ public class WeatherActivity extends AppCompatActivity {
     final String URL_UNITS = "&units=metric";
     final String URL_API_KEY = "&APPID=6293987fb4d85b38ac93029090356751";
 
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+
+
+    }
+
+
+    void downloadWeatherData(){
         final String url = URL_BASE + URL_COORDS + URL_UNITS + URL_API_KEY;
 
         /*
         * Getting a json object back*/
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("FUN", "Response " + response.toString());
-            }
-        }, new Response.ErrorListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("FUN", "Response " + response.toString());
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("FUN", "Error " + error.getLocalizedMessage());
@@ -44,6 +53,5 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
         Volley.newRequestQueue(this).add(jsonRequest);
-
     }
 }
