@@ -7,4 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.ahlberg.jacob.whatstheweather.WeatherActivity">
 
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_gravity="start"
+        app:menu="@menu/bottom_navigation_menu"
+        android:layout_height="48dp"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
 </android.support.constraint.ConstraintLayout>
