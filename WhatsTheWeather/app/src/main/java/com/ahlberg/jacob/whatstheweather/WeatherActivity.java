@@ -30,7 +30,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         /*
         * Getting a json object back*/
-        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("FUN", "Response " + response.toString());
