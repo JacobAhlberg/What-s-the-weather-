@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class WeatherActivity extends AppCompatActivity {
 
     final String URL_BASE = "http://api.openweathermap.org/data/2.5/forecast";
-    final String URL_COORDS = "/?lat=9.9687&lon=76.299";
+    final String URL_COORDS = "/?lat=59.32800&lon=18.05795";
     final String URL_UNITS = "&units=metric";
     final String URL_API_KEY = "&APPID=6293987fb4d85b38ac93029090356751";
 
@@ -39,7 +39,7 @@ public class WeatherActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("FUN", "Error" + error.getLocalizedMessage());
+                Log.e("FUN", "Error " + error.getLocalizedMessage());
             }
         });
 
