@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">What\'s The Weather?</string>
+    <string name="menu_favourite">Favorit</string>
+    <string name="menu_home">Hem</string>
+    <string name="menu_search">Sök</string>
+</resources>
