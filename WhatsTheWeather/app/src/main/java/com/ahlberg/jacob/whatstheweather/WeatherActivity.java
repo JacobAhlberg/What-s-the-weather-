@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,7 +24,11 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class WeatherActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
@@ -37,6 +42,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
     private GoogleApiClient mGoogleApiClient;
     private final int PERMISSION_LOCATION = 111;
+    private ArrayList<DailyWeatherReport> weatherReports = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +58,9 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
     }
 
-
     void downloadWeatherData(Location location){
         final String fullCoords = URL_COORDS + location.getLatitude() + "&lon=" + location.getLongitude();
-        final String url = URL_BASE + fullCoords + URL_UNITS + URL_API_KEY;
+        final String url = URL_BASE + fullCoords + URL_API_KEY;
 
         /*
         * Getting a json object back*/
@@ -64,6 +69,40 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("FUN", "Response " + response.toString());
+
+                        try {
+                            JSONObject city = response.getJSONObject("city");
+                            Log.e("CITYOBJ", city.toString());
+                            String cityName = city.getString("name");
+                            Log.e("CITY", cityName);
+                            String country = city.getString("country");
+
+                            JSONArray list = response.getJSONArray("list");
+
+                            for (int i = 0; i < 5; i++){
+                                JSONObject obj = list.getJSONObject(i);
+                                JSONObject main = obj.getJSONObject("main");
+                                Double currentTemp = main.getDouble("temp");
+                                Double maxTemp = main.getDouble("temp_max");
+                                Double minTemp = main.getDouble("temp_min");
+
+                                JSONArray weatherArr = obj.getJSONArray("weather");
+                                JSONObject weather = weatherArr.getJSONObject(0);
+                                String weatherType = weather.getString("main");
+
+                                String rawDate = obj.getString("dt_txt");
+
+                                DailyWeatherReport dailyWeatherReport = new DailyWeatherReport(cityName,
+                                        country, rawDate, maxTemp.intValue(), minTemp.intValue(),
+                                        currentTemp.intValue(), weatherType);
+
+                                weatherReports.add(dailyWeatherReport);
+                            }
+
+                        } catch (JSONException e){
+
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
