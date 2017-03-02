@@ -23,14 +23,61 @@
         android:paddingTop="0dp" />
 
     <ListView
-        android:layout_height="250dp"
+        android:layout_height="211dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/listView"
-        android:layout_width="0dp"
+        android:layout_width="389dp"
         android:background="@color/cast_expanded_controller_text_color"
         app:layout_constraintHorizontal_bias="0.0" />
+
+    <TextView
+        android:text="Today, May 1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="16dp"
+        android:textSize="25sp" />
+
+    <TextView
+        android:text="74º"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="87dp"
+        android:textSize="70sp"
+        android:id="@+id/textView2"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:text="64º"
+        android:layout_width="57dp"
+        android:layout_height="46dp"
+        android:textSize="30dp"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="124dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sunny"
+        android:id="@+id/imageView2"
+        tools:layout_editor_absoluteY="46dp"
+        tools:layout_editor_absoluteX="238dp"
+        android:contentDescription="@string/weatherLogo" />
+
+    <TextView
+        android:text="Huddinge, Sweden"
+        android:layout_width="241dp"
+        android:layout_height="42dp"
+        android:id="@+id/textView3"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        android:layout_marginBottom="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>

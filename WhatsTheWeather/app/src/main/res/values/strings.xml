@@ -4,4 +4,5 @@
     <string name="menu_search" >Search</string>
     <string name="menu_favourite" >Favourite</string>
     <string name="logo" />
+    <string name="weatherLogo" />
 </resources>
