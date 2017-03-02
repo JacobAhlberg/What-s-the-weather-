@@ -5,14 +5,15 @@
     android:id="@+id/activity_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ahlberg.jacob.whatstheweather.WeatherActivity">
+    tools:context="com.ahlberg.jacob.whatstheweather.WeatherActivity"
+    android:background="@color/backgroundColor">
 
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_gravity="start"
         app:menu="@menu/bottom_navigation_menu"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_width="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,6 +21,16 @@
         android:paddingBottom="0dp"
         android:background="@color/colorNavigationBar"
         android:paddingTop="0dp" />
+
+    <ListView
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:background="@color/cast_expanded_controller_text_color"
+        app:layout_constraintHorizontal_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>
