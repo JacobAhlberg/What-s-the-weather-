@@ -37,7 +37,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
     final String URL_BASE = "http://api.openweathermap.org/data/2.5/forecast";
     final String URL_COORDS = "/?lat=";
-    final String URL_UNITS = "&units=metric";
+    final String URL_UNITS_CELSIUS = "&units=metric";
+    final String URL_UNITS_FAHRENHEIT = "&units=imperial";
     final String URL_API_KEY = "&APPID=6293987fb4d85b38ac93029090356751";
 
     private GoogleApiClient mGoogleApiClient;
@@ -60,7 +61,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
     void downloadWeatherData(Location location){
         final String fullCoords = URL_COORDS + location.getLatitude() + "&lon=" + location.getLongitude();
-        final String url = URL_BASE + fullCoords + URL_API_KEY;
+        final String url = URL_BASE + fullCoords + URL_UNITS_CELSIUS + URL_API_KEY;
 
         /*
         * Getting a json object back*/
@@ -72,11 +73,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
                         try {
                             JSONObject city = response.getJSONObject("city");
-                            Log.e("CITYOBJ", city.toString());
                             String cityName = city.getString("name");
-                            Log.e("CITY", cityName);
                             String country = city.getString("country");
-
                             JSONArray list = response.getJSONArray("list");
 
                             for (int i = 0; i < 5; i++){
