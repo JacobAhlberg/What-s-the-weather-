@@ -5,11 +5,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
@@ -40,6 +44,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     final String URL_UNITS_CELSIUS = "&units=metric";
     final String URL_UNITS_FAHRENHEIT = "&units=imperial";
     final String URL_API_KEY = "&APPID=6293987fb4d85b38ac93029090356751";
+    private BottomNavigationView mBottomNav;
+    private int mSelectedItem;
 
     private GoogleApiClient mGoogleApiClient;
     private final int PERMISSION_LOCATION = 111;
@@ -49,6 +55,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -56,6 +63,15 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                return true;
+            }
+        });
+
 
     }
 
@@ -69,7 +85,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("FUN", "Response " + response.toString());
 
                         try {
                             JSONObject city = response.getJSONObject("city");
