@@ -12,8 +12,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,12 +51,12 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     final String URL_UNITS_CELSIUS = "&units=metric";
     final String URL_UNITS_FAHRENHEIT = "&units=imperial";
     final String URL_API_KEY = "&APPID=6293987fb4d85b38ac93029090356751";
-    private BottomNavigationView mBottomNav;
-    private int mSelectedItem;
 
     private GoogleApiClient mGoogleApiClient;
     private final int PERMISSION_LOCATION = 111;
     private ArrayList<DailyWeatherReport> weatherReports = new ArrayList<>();
+    private BottomNavigationView mBottomNav;
+    private int mSelectedItem;
 
     private ImageView weatherIcon;
     private TextView weatherDate;
@@ -62,11 +65,12 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     private TextView cityCountry;
     private TextView weatherDescription;
 
+    WeatherAdapter mWeatherAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
 
         weatherIcon = (ImageView)findViewById(R.id.weatherIcon);
         weatherDate = (TextView)findViewById(R.id.weatherDate);
@@ -75,6 +79,15 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         cityCountry = (TextView)findViewById(R.id.cityCountry);
         weatherDescription = (TextView)findViewById(R.id.weatherDescription);
 
+        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.content_weather_reports);
+//        WeatherReportViewHolder weatherReportViewHolder = new WeatherReportViewHolder(, this);
+
+        mWeatherAdapter = new WeatherAdapter(weatherReports);
+        recyclerView.setAdapter(mWeatherAdapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -87,9 +100,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     void downloadWeatherData(Location location){
-//        ?lat=9.9687&lon=76.299";
-//        final String fullCoords = URL_COORDS + location.getLatitude() + "&lon=" + location.getLongitude();
-        final String fullCoords = "?lat=9.9687&lon=76.299";
+        final String fullCoords = URL_COORDS + location.getLatitude() + "&lon=" + location.getLongitude();;
         final String url = URL_BASE + fullCoords  + URL_UNITS_CELSIUS + URL_API_KEY;
 
         //Getting a json object back
@@ -129,6 +140,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                         }
 
                         updateUI();
+                        mWeatherAdapter.notifyDataSetChanged();
 
                     }
                 }, new Response.ErrorListener() {
@@ -141,7 +153,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         Volley.newRequestQueue(this).add(jsonRequest);
     }
 
-    void updateUI(){
+    public void updateUI(){
         if (weatherReports.size() > 0){
             DailyWeatherReport report = weatherReports.get(0);
 
@@ -154,13 +166,17 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.rainy));
                     break;
 
+                case DailyWeatherReport.WEATHER_TYPE_SNOW:
+                    weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+                    break;
+
                 default:
                         weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.sunlogo));
             }
 
-            weatherDate.setText("Nisse");
-            currentTemp.setText(Integer.toString(report.getTemp()));
-            lowTemp.setText(Integer.toString((report.getMinTemp())));
+            weatherDate.setText(report.getFormattedDate());
+            currentTemp.setText(Integer.toString(report.getTemp()) + "º");
+            lowTemp.setText(Integer.toString(report.getMinTemp()) + "º");
             cityCountry.setText(report.getCityName() + ", " + report.getCountry());
             weatherDescription.setText(report.getWeather());
         }
@@ -226,3 +242,5 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     }
 
 }
+
+
