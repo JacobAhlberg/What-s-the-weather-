@@ -5,6 +5,12 @@ package com.ahlberg.jacob.whatstheweather.model;
  */
 
 public class DailyWeatherReport {
+    public final static String WEATHER_TYPE_CLOUDS = "Clouds";
+    public final static String WEATHER_TYPE_CLEAR = "Clear";
+    public final static String WEATHER_TYPE_RAIN = "Rain";
+    public final static String WEATHER_TYPE_WIND = "Wind";
+    public final static String WEATHER_TYPE_SNOW = "Snow";
+
     private String cityName;
     private String country;
     private String weather;
