@@ -81,7 +81,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
         mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.content_weather_reports);
-//        WeatherReportViewHolder weatherReportViewHolder = new WeatherReportViewHolder(, this);
 
         mWeatherAdapter = new WeatherAdapter(weatherReports);
         recyclerView.setAdapter(mWeatherAdapter);
@@ -102,7 +101,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     void downloadWeatherData(Location location){
         final String fullCoords = URL_COORDS + location.getLatitude() + "&lon=" + location.getLongitude();;
         final String url = URL_BASE + fullCoords  + URL_UNITS_CELSIUS + URL_API_KEY;
-
+        //String url = "http://api.openweathermap.org/data/2.5/forecast/?lat=-17.4379&lon=131.7715&APPID=6293987fb4d85b38ac93029090356751";
+        Log.e("URL________________", url);
         //Getting a json object back
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -136,7 +136,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                             }
 
                         } catch (JSONException e){
-
+                            Log.e("FAILED", "CHECK INTERNET");
                         }
 
                         updateUI();
@@ -159,19 +159,19 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
 
             switch (report.getWeather()){
                 case DailyWeatherReport.WEATHER_TYPE_CLOUDS:
-                    weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.cloudy));
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy));
                     break;
 
                 case DailyWeatherReport.WEATHER_TYPE_RAIN:
-                    weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.rainy));
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rainy));
                     break;
 
                 case DailyWeatherReport.WEATHER_TYPE_SNOW:
-                    weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow));
                     break;
 
                 default:
-                        weatherIcon.setImageDrawable(getResources().getDrawable(R.drawable.sunlogo));
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sunny));
             }
 
             weatherDate.setText(report.getFormattedDate());

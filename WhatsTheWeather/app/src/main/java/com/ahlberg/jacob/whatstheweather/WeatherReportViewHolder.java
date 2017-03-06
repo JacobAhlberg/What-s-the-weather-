@@ -1,6 +1,7 @@
 package com.ahlberg.jacob.whatstheweather;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,20 +40,27 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
 
         switch (report.getWeather()){
             case DailyWeatherReport.WEATHER_TYPE_CLOUDS:
-                weatherIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.cloudy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_RAIN:
-                weatherIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.rainy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_rainy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_SNOW:
-                weatherIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.snow));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_snow));
                 break;
 
             default:
-                weatherIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.sunlogo));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_sunny));
         }
+
+        weatherDescription.setText(report.getWeather());
+        tempHigh.setText(Integer.toString(report.getMaxTemp()));
+        tempLow.setText(Integer.toString(report.getMinTemp()));
+
+
+
     }
 
 }

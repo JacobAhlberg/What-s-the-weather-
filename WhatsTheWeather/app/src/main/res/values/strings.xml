@@ -5,9 +5,9 @@
     <string name="menu_favourite" >Favourite</string>
     <string name="logo" />
     <string name="weatherLogo" />
-    <string name="gettingLoc">Getting Location</string>
-    <string name="gettingDate">Getting date</string>
+    <string name="gettingLoc">No location found</string>
+    <string name="gettingDate">Please check your network</string>
     <string name="default_current_temp">0º</string>
     <string name="default_low_temp">0º</string>
-    <string name="default_weather_type">Clear</string>
+    <string name="default_weather_type">None</string>
 </resources>
