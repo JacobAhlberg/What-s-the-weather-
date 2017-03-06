@@ -51,6 +51,10 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
                 weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_snow));
                 break;
 
+            case DailyWeatherReport.WEATHER_TYPE_LIGHTNING:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_thunder_lightning));
+                break;
+
             default:
                 weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_sunny));
         }

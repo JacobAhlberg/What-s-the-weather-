@@ -11,7 +11,7 @@
         android:id="@+id/list_weather_icon"
         android:layout_width="61dp"
         android:layout_height="66dp"
-        card_view:srcCompat="@drawable/sunlogo"
+        card_view:srcCompat="@drawable/whats_the_weather_logo"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -19,9 +19,8 @@
         card_view:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        card_view:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        card_view:layout_constraintVertical_bias="0.0" />
+        card_view:layout_constraintBottom_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/list_weather_day"

@@ -170,6 +170,10 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow));
                     break;
 
+                case DailyWeatherReport.WEATHER_TYPE_LIGHTNING:
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.thunder_lightning));
+                    break;
+
                 default:
                     weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sunny));
             }

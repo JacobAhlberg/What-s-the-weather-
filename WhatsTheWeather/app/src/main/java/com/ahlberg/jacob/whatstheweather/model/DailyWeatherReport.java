@@ -6,7 +6,7 @@ package com.ahlberg.jacob.whatstheweather.model;
 
 public class DailyWeatherReport {
     public final static String WEATHER_TYPE_CLOUDS = "Clouds";
-    public final static String WEATHER_TYPE_THUNDER = "";
+    public final static String WEATHER_TYPE_LIGHTNING = "Lightning";
     public final static String WEATHER_TYPE_CLEAR = "Clear";
     public final static String WEATHER_TYPE_RAIN = "Rain";
     public final static String WEATHER_TYPE_WIND = "Wind";
@@ -34,7 +34,7 @@ public class DailyWeatherReport {
 
     public String rawDateToFormatted (String rawDate){
 
-        return "CITY";
+        return rawDate;
     }
 
     public String getCityName() {return cityName;}
