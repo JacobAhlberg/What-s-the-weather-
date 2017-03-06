@@ -8,5 +8,5 @@
     <string name="default_weather_type">Ingen</string>
     <string name="default_current_temp">0º</string>
     <string name="default_low_temp">0º</string>
-    <string name="gettingLoc">Plats ej funnen</string>
+    <string name="gettingLoc">Kunde inte hitta din position</string>
 </resources>

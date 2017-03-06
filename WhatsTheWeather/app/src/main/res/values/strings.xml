@@ -3,8 +3,8 @@
     <string name="menu_home" >Home</string>
     <string name="menu_search" >Search</string>
     <string name="menu_favourite" >Favourite</string>
-    <string name="logo" />
-    <string name="weatherLogo" />
+    <string name="logo" translatable="false" />
+    <string name="weatherLogo" translatable="false" />
     <string name="gettingLoc">No location found</string>
     <string name="gettingDate">Please check your network</string>
     <string name="default_current_temp">0º</string>
