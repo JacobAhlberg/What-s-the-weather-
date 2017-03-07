@@ -54,26 +54,27 @@
 
     <TextView
         android:id="@+id/currentTemp"
-        android:layout_width="133dp"
+        android:layout_width="wrap_content"
         android:layout_height="92dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="21dp"
         android:gravity="bottom|start"
         android:maxWidth="150dp"
         android:text="@string/default_current_temp"
         android:textColor="@color/textColor"
         android:textSize="60sp"
-        app:layout_constraintHorizontal_bias="0.681"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/lowTemp"
         app:layout_constraintTop_toBottomOf="@+id/weatherDate" />
 
     <TextView
         android:id="@+id/lowTemp"
-        android:layout_width="67dp"
+        android:layout_width="wrap_content"
         android:layout_height="44dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginRight="0dp"
         android:layout_marginStart="9dp"
         android:gravity="bottom|start"
