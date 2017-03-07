@@ -1,5 +1,7 @@
 package com.ahlberg.jacob.whatstheweather.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jacob on 2017-03-01.
  */
@@ -20,9 +22,12 @@ public class DailyWeatherReport {
     private int maxTemp;
     private int minTemp;
 
+    private ArrayList<String> dates = new ArrayList<>();
+
     public DailyWeatherReport(String cityName, String country,
                               String rawDate, int maxTemp,
-                              int minTemp, int temp, String weather) {
+                              int minTemp, int temp, String weather,
+                              ArrayList<String> rawDates) {
         this.cityName = cityName;
         this.country = country;
         this.formattedDate = rawDateToFormatted(rawDate);
@@ -30,11 +35,17 @@ public class DailyWeatherReport {
         this.minTemp = minTemp;
         this.temp = temp;
         this.weather = weather;
+        this.dates = rawDatesToFormatted(rawDates);
     }
 
     public String rawDateToFormatted (String rawDate){
 
         return rawDate;
+    }
+
+    public ArrayList<String> rawDatesToFormatted (ArrayList<String> rawDates){
+
+        return rawDates;
     }
 
     public String getCityName() {return cityName;}
@@ -50,5 +61,7 @@ public class DailyWeatherReport {
     public int getTemp() {return temp;}
 
     public String getWeather() {return weather;}
+
+    public ArrayList<String> getDates() {return dates;}
 
 }
