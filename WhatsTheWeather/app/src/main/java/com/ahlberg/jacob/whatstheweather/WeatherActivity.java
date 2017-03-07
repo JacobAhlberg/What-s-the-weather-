@@ -5,8 +5,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -15,8 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +39,6 @@ import java.util.ArrayList;
 public class WeatherActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, LocationListener
 {
-
-    //Hardcoded location: ?lat=9.9687&lon=76.299";
 
     final String URL_BASE = "http://api.openweathermap.org/data/2.5/forecast";
     final String URL_COORDS = "/?lat=";
@@ -103,6 +97,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         final String url = URL_BASE + fullCoords  + URL_UNITS_CELSIUS + URL_API_KEY;
         //String url = "http://api.openweathermap.org/data/2.5/forecast/?lat=-17.4379&lon=131.7715&APPID=6293987fb4d85b38ac93029090356751";
         Log.e("URL________________", url);
+
         //Getting a json object back
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -146,7 +141,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("GODDAMNIT", error.toString());
             }
         });
 
@@ -178,9 +173,12 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sunny));
             }
 
+            String currentTempString = Integer.toString(report.getTemp()) + "º";
+            String lowTempString = Integer.toString(report.getMinTemp()) + "º";
+
             weatherDate.setText(report.getFormattedDate());
-            currentTemp.setText(Integer.toString(report.getTemp()) + "º");
-            lowTemp.setText(Integer.toString(report.getMinTemp()) + "º");
+            currentTemp.setText(currentTempString);
+            lowTemp.setText(lowTempString);
             cityCountry.setText(report.getCityName() + ", " + report.getCountry());
             weatherDescription.setText(report.getWeather());
         }
