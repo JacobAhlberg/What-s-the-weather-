@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">What\'s The Weather?</string>
-    <string name="menu_home" >Home</string>
-    <string name="menu_search" >Search</string>
-    <string name="menu_favourite" >Favourite</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_favourite">Favourite</string>
     <string name="logo" translatable="false" />
     <string name="weatherLogo" translatable="false" />
     <string name="gettingLoc">No location found</string>

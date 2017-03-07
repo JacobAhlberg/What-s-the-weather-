@@ -58,10 +58,11 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
             default:
                 weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_sunny));
         }
-
+        String tempHighString = report.getMaxTemp() + "";
+        String tempLowString = report.getMinTemp() + "";
         weatherDescription.setText(report.getWeather());
-        tempHigh.setText(Integer.toString(report.getMaxTemp()));
-        tempLow.setText(Integer.toString(report.getMinTemp()));
+        tempHigh.setText(tempHighString);
+        tempLow.setText(tempLowString);
 
 
 
