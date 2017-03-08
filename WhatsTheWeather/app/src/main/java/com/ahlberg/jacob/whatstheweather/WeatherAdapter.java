@@ -30,7 +30,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder
 
     @Override
     public void onBindViewHolder(WeatherReportViewHolder holder, int position) {
-        DailyWeatherReport report =  dailyWeatherReports.get(position);
+        DailyWeatherReport report = dailyWeatherReports.get(position);
         holder.updateUI(report);
     }
 

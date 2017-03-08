@@ -20,13 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SearchActivity"
             android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyBFEwHLYYRV9z55LRFYOMPyRB2BoYhOIbI"/>
+                android:value="AIzaSyBFEwHLYYRV9z55LRFYOMPyRB2BoYhOIbI" />
         </activity>
     </application>
 

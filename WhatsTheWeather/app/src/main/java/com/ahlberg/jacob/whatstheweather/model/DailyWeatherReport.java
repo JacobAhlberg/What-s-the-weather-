@@ -1,5 +1,8 @@
 package com.ahlberg.jacob.whatstheweather.model;
 
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -7,60 +10,55 @@ import java.util.ArrayList;
  */
 
 public class DailyWeatherReport {
-    public final static String WEATHER_TYPE_CLOUDS = "Clouds";
-    public final static String WEATHER_TYPE_LIGHTNING = "Lightning";
-    public final static String WEATHER_TYPE_CLEAR = "Clear";
-    public final static String WEATHER_TYPE_RAIN = "Rain";
-    public final static String WEATHER_TYPE_WIND = "Wind";
-    public final static String WEATHER_TYPE_SNOW = "Snow";
 
-    private String cityName;
-    private String country;
-    private String weather;
-    private String formattedDate;
-    private int temp;
-    private int maxTemp;
-    private int minTemp;
+    public final static String WEATHER_TYPE_CLEAR_DAY = "clear-day";
+    public final static String WEATHER_TYPE_CLEAR_NIGHT = "clear-night";
+    public final static String WEATHER_TYPE_RAIN = "rain";
+    public final static String WEATHER_TYPE_SNOW = "snow";
+    public final static String WEATHER_TYPE_SLEET = "sleet";
+    public final static String WEATHER_TYPE_WIND = "wind";
+    public final static String WEATHER_TYPE_FOG = "fog";
+    public final static String WEATHER_TYPE_CLOUDY = "cloudy";
+    public final static String WEATHER_TYPE_CLOUDY_DAY = "partly-cloudy-day";
+    public final static String WEATHER_TYPE_CLOUDY_NIGHT = "partly-cloudy-night";
+    public final static String WEATHER_TYPE_HAIL = "hail";
+    public final static String WEATHER_TYPE_LIGHTNING = "thunderstorm";
+    public final static String WEATHER_TYPE_TORNADO = "tornado";
 
-//    private ArrayList<String> dates = new ArrayList<>();
+    private String timeZone;
+    private String weatherDescription;
+    private double latitude;
+    private double longitude;
+    private double temperature;
 
-    public DailyWeatherReport(String cityName, String country,
-                              String rawDate, int maxTemp,
-                              int minTemp, int temp, String weather) {
-        this.cityName = cityName;
-        this.country = country;
-        this.formattedDate = rawDateToFormatted(rawDate);
-        this.maxTemp = maxTemp;
-        this.minTemp = minTemp;
-        this.temp = temp;
-        this.weather = weather;
-//        this.dates = rawDatesToFormatted(rawDates);
+    public DailyWeatherReport(String timeZone, String weatherDescription,
+                              double latitude, double longitude,
+                              double temperature) {
+
+        this.timeZone = timeZone;
+        this.weatherDescription = weatherDescription;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.temperature = temperature;
     }
 
-    public String rawDateToFormatted (String rawDate){
-
-        return rawDate;
+    public String getTimeZone() {
+        return timeZone;
     }
 
-//    public ArrayList<String> rawDatesToFormatted (ArrayList<String> rawDates){
-//
-//        return rawDates;
-//    }
+    public String getWeatherDescription() {
+        return weatherDescription;
+    }
 
-    public String getCityName() {return cityName;}
+    public double getLatitude() {
+        return latitude;
+    }
 
-    public String getCountry() {return country;}
+    public double getLongitude() {
+        return longitude;
+    }
 
-    public String getFormattedDate() {return formattedDate;}
-
-    public int getMaxTemp() {return maxTemp;}
-
-    public int getMinTemp() {return minTemp;}
-
-    public int getTemp() {return temp;}
-
-    public String getWeather() {return weather;}
-
-//    public ArrayList<String> getDates() {return dates;}
-
+    public double getTemperature() {
+        return temperature;
+    }
 }

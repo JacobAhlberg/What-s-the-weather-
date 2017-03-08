@@ -9,6 +9,13 @@ import android.widget.TextView;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import static com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport.WEATHER_TYPE_LIGHTNING;
+
 /**
  * Created by Jacob on 2017-03-05.
  */
@@ -36,36 +43,64 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
 
     public void updateUI (DailyWeatherReport report){
 
-        weatherDate.setText(report.getFormattedDate());
+        switch (report.getWeatherDescription()){
+            case DailyWeatherReport.WEATHER_TYPE_CLEAR_NIGHT:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.partially_cloudy));
+                break;
 
-        switch (report.getWeather()){
-            case DailyWeatherReport.WEATHER_TYPE_CLOUDS:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_cloudy));
+            case DailyWeatherReport.WEATHER_TYPE_CLOUDY:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_CLOUDY_DAY:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_CLOUDY_NIGHT:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_RAIN:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_rainy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.rainy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_SNOW:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_snow));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.snow));
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_SLEET:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.snow)); //NEW PICTURE PLEASE
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_WIND:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy)); // NEW PICTURE PLEASE
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_FOG:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy)); // NEW PICTURE PLEASE
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_HAIL:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy)); // NEW PICTURE PLEASE
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_LIGHTNING:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_thunder_lightning));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.thunder_lightning));
+                break;
+
+            case DailyWeatherReport.WEATHER_TYPE_TORNADO:
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy)); // NEW PICTURE PLEASE
                 break;
 
             default:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_sunny));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.sunny));
         }
-        String tempHighString = report.getMaxTemp() + "";
-        String tempLowString = report.getMinTemp() + "";
-        weatherDescription.setText(report.getWeather());
-        tempHigh.setText(tempHighString);
-        tempLow.setText(tempLowString);
+
 
 
 
     }
 
 }
+
+
