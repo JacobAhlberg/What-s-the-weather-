@@ -27,16 +27,18 @@ public class DailyWeatherReport {
 
     private String timeZone;
     private String weatherDescription;
+    private String weatherIcon;
     private double latitude;
     private double longitude;
     private double temperature;
 
     public DailyWeatherReport(String timeZone, String weatherDescription,
-                              double latitude, double longitude,
-                              double temperature) {
+                              String weatherIcon, double latitude,
+                              double longitude, double temperature) {
 
         this.timeZone = timeZone;
         this.weatherDescription = weatherDescription;
+        this.weatherIcon = weatherIcon;
         this.latitude = latitude;
         this.longitude = longitude;
         this.temperature = temperature;
@@ -48,6 +50,10 @@ public class DailyWeatherReport {
 
     public String getWeatherDescription() {
         return weatherDescription;
+    }
+
+    public String getWeatherIcon() {
+        return weatherIcon;
     }
 
     public double getLatitude() {

@@ -43,7 +43,7 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
 
     public void updateUI (DailyWeatherReport report){
 
-        switch (report.getWeatherDescription()){
+        switch (report.getWeatherIcon()){
             case DailyWeatherReport.WEATHER_TYPE_CLEAR_NIGHT:
                 weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.partially_cloudy));
                 break;

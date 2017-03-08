@@ -3,6 +3,7 @@ package com.ahlberg.jacob.whatstheweather;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +91,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
     }
 
 
@@ -122,15 +125,27 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 String weatherDescription = forecast
                         .getCurrentlyWeatherReport()
                         .getWeatherDescription();
+                String weatherIcon = forecast
+                        .getCurrentlyWeatherReport()
+                        .getIcon();
                 double latitude = forecast.getLatitude();
                 double longitude = forecast.getLongitude();
                 double temperature = forecast.getCurrentlyWeatherReport().getTemperature();
 
                 DailyWeatherReport report = new DailyWeatherReport(timeZone, weatherDescription,
-                        latitude, longitude, temperature);
+                        weatherIcon, latitude, longitude, temperature);
 
                 weatherReports.add(report);
-                updateUI();
+
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUI();
+                    }
+                });
+
+
+
             }
         });
     }
@@ -139,7 +154,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         if (weatherReports.size() > 0) {
             DailyWeatherReport report = weatherReports.get(0);
 
-            switch (report.getWeatherDescription()) {
+            switch (report.getWeatherIcon()) {
 
                 case DailyWeatherReport.WEATHER_TYPE_CLEAR_NIGHT:
                     weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.partially_cloudy));
