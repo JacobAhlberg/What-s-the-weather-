@@ -45,27 +45,27 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
 
         switch (report.getWeatherIcon()){
             case DailyWeatherReport.WEATHER_TYPE_CLEAR_NIGHT:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.partially_cloudy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_partially_cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_CLOUDY:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_CLOUDY_DAY:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_CLOUDY_NIGHT:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_cloudy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_RAIN:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.rainy));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_rainy));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_SNOW:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.snow));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_snow));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_SLEET:
@@ -77,7 +77,7 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_FOG:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cloudy)); // NEW PICTURE PLEASE
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_fog));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_HAIL:
@@ -85,7 +85,7 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_LIGHTNING:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.thunder_lightning));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_thunder_lightning));
                 break;
 
             case DailyWeatherReport.WEATHER_TYPE_TORNADO:
@@ -93,8 +93,10 @@ public class WeatherReportViewHolder extends RecyclerView.ViewHolder {
                 break;
 
             default:
-                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.sunny));
+                weatherIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.list_sunny));
         }
+
+        
 
 
 

@@ -9,12 +9,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class CurrentlyWeatherReport {
-    @SerializedName("summary")
-    private String weatherDescription;
-    @SerializedName("icon")
-    private String icon;
-    @SerializedName("temperature")
-    private double temperature;
+    @SerializedName("summary") private String weatherDescription;
+    @SerializedName("icon") private String icon;
+    @SerializedName("temperature") private double temperature;
 
     public String getWeatherDescription() {
         return weatherDescription;

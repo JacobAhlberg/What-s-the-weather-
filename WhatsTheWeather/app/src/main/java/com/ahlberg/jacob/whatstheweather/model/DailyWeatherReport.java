@@ -25,18 +25,18 @@ public class DailyWeatherReport {
     public final static String WEATHER_TYPE_LIGHTNING = "thunderstorm";
     public final static String WEATHER_TYPE_TORNADO = "tornado";
 
-    private String timeZone;
+    private String location;
     private String weatherDescription;
     private String weatherIcon;
     private double latitude;
     private double longitude;
-    private double temperature;
+    private int temperature;
 
     public DailyWeatherReport(String timeZone, String weatherDescription,
                               String weatherIcon, double latitude,
-                              double longitude, double temperature) {
+                              double longitude, int temperature) {
 
-        this.timeZone = timeZone;
+        this.location = location(timeZone);
         this.weatherDescription = weatherDescription;
         this.weatherIcon = weatherIcon;
         this.latitude = latitude;
@@ -44,8 +44,13 @@ public class DailyWeatherReport {
         this.temperature = temperature;
     }
 
-    public String getTimeZone() {
-        return timeZone;
+    private String location(String timeZone){
+        String[] split = timeZone.split("/");
+        return split[1];
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public String getWeatherDescription() {
@@ -64,7 +69,7 @@ public class DailyWeatherReport {
         return longitude;
     }
 
-    public double getTemperature() {
+    public int getTemperature() {
         return temperature;
     }
 }

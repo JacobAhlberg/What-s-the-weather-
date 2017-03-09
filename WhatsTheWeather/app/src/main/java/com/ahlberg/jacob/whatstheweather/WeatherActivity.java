@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
 import com.ahlberg.jacob.whatstheweather.model.Forecast;
+import com.ahlberg.jacob.whatstheweather.model.Weekdays;
+import com.ahlberg.jacob.whatstheweather.model.WeeklyDay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Handler;
 
 import butterknife.BindView;
@@ -57,6 +60,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     private final int PERMISSION_LOCATION = 111;
     private ArrayList<DailyWeatherReport> weatherReports = new ArrayList<>();
     private int mSelectedItem;
+    private boolean celcius = true;
 
     @BindView(R.id.weatherIcon) ImageView weatherIcon;
     @BindView(R.id.weatherDate) TextView weatherDate;
@@ -130,7 +134,13 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                         .getIcon();
                 double latitude = forecast.getLatitude();
                 double longitude = forecast.getLongitude();
-                double temperature = forecast.getCurrentlyWeatherReport().getTemperature();
+                double temperatureFahrenheit = forecast.getCurrentlyWeatherReport().getTemperature();
+                int temperature = fahrenheitToCelcius(temperatureFahrenheit);
+
+                WeeklyDay day = forecast.getWeeklyWeatherReport().getWeeklyDays().get(0);
+
+
+
 
                 DailyWeatherReport report = new DailyWeatherReport(timeZone, weatherDescription,
                         weatherIcon, latitude, longitude, temperature);
@@ -189,7 +199,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     break;
 
                 case DailyWeatherReport.WEATHER_TYPE_FOG:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy)); // NEW PICTURE PLEASE
+                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fog));
                     break;
 
                 case DailyWeatherReport.WEATHER_TYPE_HAIL:
@@ -208,39 +218,50 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sunny));
             }
 
-            String temperture = "" + report.getTemperature();
-            currentTemp.setText(temperture);
-            weatherDate.setText(report.getTimeZone());
-            cityCountry.setText(report.getTimeZone());
+            String temperature = "" + report.getTemperature() + "°";
+            String day = Weekdays.getDayOfWeek();
+            currentTemp.setText(temperature);
+            weatherDate.setText(day);
+            cityCountry.setText(report.getLocation());
             weatherDescription.setText(report.getWeatherDescription());
+
+
 
         }
     }
 
-
-        @Override
-        public void onLocationChanged (Location location){
-            downloadWeatherData(location);
+    private int fahrenheitToCelcius(double temperature){
+        if (celcius) {
+            return (int) ((((temperature - 32) * 5) / 9) + 0.5);
         }
-
-        @Override
-        public void onConnected (@Nullable Bundle bundle){
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSION_LOCATION);
-            } else {
-                startLocationServices();
-            }
+        else{
+            return (int) temperature;
         }
+    }
 
-        @Override
-        public void onConnectionFailed (@NonNull ConnectionResult connectionResult){
-        }
+    @Override
+    public void onLocationChanged(Location location) {
+        downloadWeatherData(location);
+    }
 
-        @Override
-        public void onConnectionSuspended ( int i){
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_LOCATION);
+        } else {
+            startLocationServices();
         }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
 
     public void startLocationServices() {
         try {

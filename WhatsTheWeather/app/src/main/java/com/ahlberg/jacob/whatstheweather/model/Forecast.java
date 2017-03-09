@@ -9,15 +9,11 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Forecast {
-    @SerializedName("latitude")
-    private double latitude;
-    @SerializedName("longitude")
-    private double longitude;
-    @SerializedName("timezone")
-    private String timeZone;
-
-    @SerializedName("currently")
-    private CurrentlyWeatherReport currentlyWeatherReport;
+    @SerializedName("latitude") private double latitude;
+    @SerializedName("longitude") private double longitude;
+    @SerializedName("timezone") private String timeZone;
+    @SerializedName("currently") private CurrentlyWeatherReport currentlyWeatherReport;
+    @SerializedName("daily") private WeeklyWeatherReport weeklyWeatherReport;
 
     public double getLatitude() {
         return latitude;
@@ -33,5 +29,9 @@ public class Forecast {
 
     public CurrentlyWeatherReport getCurrentlyWeatherReport() {
         return currentlyWeatherReport;
+    }
+
+    public WeeklyWeatherReport getWeeklyWeatherReport() {
+        return weeklyWeatherReport;
     }
 }
