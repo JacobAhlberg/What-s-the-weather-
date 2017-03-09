@@ -2,8 +2,8 @@ package com.ahlberg.jacob.whatstheweather;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -20,9 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
+import com.ahlberg.jacob.whatstheweather.model.Day;
 import com.ahlberg.jacob.whatstheweather.model.Forecast;
-import com.ahlberg.jacob.whatstheweather.model.Weekdays;
-import com.ahlberg.jacob.whatstheweather.model.WeeklyDay;
+import com.ahlberg.jacob.whatstheweather.model.WeeklyWeatherReport;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -30,14 +30,12 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Handler;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +57,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     private GoogleApiClient mGoogleApiClient;
     private final int PERMISSION_LOCATION = 111;
     private ArrayList<DailyWeatherReport> weatherReports = new ArrayList<>();
-    private int mSelectedItem;
+    private ArrayList<WeeklyWeatherReport> weeklyWeatherReports = new ArrayList<>();
     private boolean celcius = true;
 
     @BindView(R.id.weatherIcon) ImageView weatherIcon;
@@ -83,7 +81,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mWeatherAdapter = new WeatherAdapter(weatherReports);
+        mWeatherAdapter = new WeatherAdapter(weeklyWeatherReports, this);
         recyclerView.setAdapter(mWeatherAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -95,12 +93,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-
-    }
-
-
-    protected synchronized void buildGoogleApiClient() {
-
     }
 
     void downloadWeatherData(Location location) {
@@ -134,109 +126,62 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                         .getIcon();
                 double latitude = forecast.getLatitude();
                 double longitude = forecast.getLongitude();
-                double temperatureFahrenheit = forecast.getCurrentlyWeatherReport().getTemperature();
+                double temperatureFahrenheit = forecast
+                        .getCurrentlyWeatherReport()
+                        .getTemperature();
                 int temperature = fahrenheitToCelcius(temperatureFahrenheit);
 
-                WeeklyDay day = forecast.getWeeklyWeatherReport().getWeeklyDays().get(0);
+                DailyWeatherReport dailyReport = new DailyWeatherReport(timeZone,
+                        weatherDescription, weatherIcon, latitude, longitude, temperature);
+                weatherReports.add(dailyReport);
 
+                List<Day> days = forecast.getWeeklyWeather().getWeeklyDays();
 
-
-
-                DailyWeatherReport report = new DailyWeatherReport(timeZone, weatherDescription,
-                        weatherIcon, latitude, longitude, temperature);
-
-                weatherReports.add(report);
+                for (Day day: days){
+                    double fahrenheitMinTemp = day.getTemperatureMin();
+                    int tempMin = fahrenheitToCelcius(fahrenheitMinTemp);
+                    fahrenheitMinTemp = day.getTemperatureMax();
+                    int tempMax = fahrenheitToCelcius(fahrenheitMinTemp);
+                    WeeklyWeatherReport weeklyWeatherReport = new WeeklyWeatherReport(day.getSummary(),
+                            day.getIcon(), tempMin, tempMax);
+                    weeklyWeatherReports.add(weeklyWeatherReport);
+                }
 
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         updateUI();
+                        mWeatherAdapter.notifyDataSetChanged();
                     }
                 });
-
-
-
             }
         });
+    }
+
+    public static String getDayOfWeek(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("EEEE");
+        return format.format(date);
     }
 
     public void updateUI() {
         if (weatherReports.size() > 0) {
             DailyWeatherReport report = weatherReports.get(0);
 
-            switch (report.getWeatherIcon()) {
+            Drawable drawable = report.getDrawable(this);
+            weatherIcon.setImageDrawable(drawable);
 
-                case DailyWeatherReport.WEATHER_TYPE_CLEAR_NIGHT:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.partially_cloudy));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_CLOUDY:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_CLOUDY_DAY:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_CLOUDY_NIGHT:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_RAIN:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rainy));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_SNOW:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_SLEET:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow)); //NEW PICTURE PLEASE
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_WIND:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy)); // NEW PICTURE PLEASE
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_FOG:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fog));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_HAIL:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy)); // NEW PICTURE PLEASE
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_LIGHTNING:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.thunder_lightning));
-                    break;
-
-                case DailyWeatherReport.WEATHER_TYPE_TORNADO:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloudy)); // NEW PICTURE PLEASE
-                    break;
-
-                default:
-                    weatherIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sunny));
-            }
-
+            String day = getDayOfWeek(Calendar.getInstance().getTime());
             String temperature = "" + report.getTemperature() + "°";
-            String day = Weekdays.getDayOfWeek();
             currentTemp.setText(temperature);
             weatherDate.setText(day);
             cityCountry.setText(report.getLocation());
             weatherDescription.setText(report.getWeatherDescription());
-
-
-
         }
     }
 
     private int fahrenheitToCelcius(double temperature){
-        if (celcius) {
-            return (int) ((((temperature - 32) * 5) / 9) + 0.5);
-        }
-        else{
-            return (int) temperature;
-        }
+        if (celcius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
+        else  return (int) temperature;
     }
 
     @Override
@@ -256,12 +201,10 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {   }
 
     @Override
-    public void onConnectionSuspended(int i) {
-    }
+    public void onConnectionSuspended(int i) {}
 
     public void startLocationServices() {
         try {

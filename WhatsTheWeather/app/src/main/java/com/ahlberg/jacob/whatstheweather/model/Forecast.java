@@ -13,7 +13,7 @@ public class Forecast {
     @SerializedName("longitude") private double longitude;
     @SerializedName("timezone") private String timeZone;
     @SerializedName("currently") private CurrentlyWeatherReport currentlyWeatherReport;
-    @SerializedName("daily") private WeeklyWeatherReport weeklyWeatherReport;
+    @SerializedName("daily") private WeeklyWeather weeklyWeather;
 
     public double getLatitude() {
         return latitude;
@@ -31,7 +31,7 @@ public class Forecast {
         return currentlyWeatherReport;
     }
 
-    public WeeklyWeatherReport getWeeklyWeatherReport() {
-        return weeklyWeatherReport;
+    public WeeklyWeather getWeeklyWeather() {
+        return weeklyWeather;
     }
 }
