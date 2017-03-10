@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -27,6 +29,19 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyBFEwHLYYRV9z55LRFYOMPyRB2BoYhOIbI" />
         </activity>
+        <activity android:name=".SettingsActivity" />
+
+        <receiver
+            android:name=".NetworkReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="internet" />
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
 
 </manifest>

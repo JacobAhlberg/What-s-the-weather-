@@ -23,7 +23,4 @@ public class WeeklyWeather{
     public List<Day> getWeeklyDays() {
         return weeklyDays;
     }
-
-
-
 }

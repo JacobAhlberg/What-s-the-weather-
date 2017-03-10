@@ -13,14 +13,16 @@ import java.util.ArrayList;
 
 /**
  * Created by Jacob on 2017-03-05.
+ * What's The Weather?
+ * SMHI API
  */
 
-public class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
+class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
     private Context context;
     private ArrayList<WeeklyWeatherReport> weeklyWeatherReports;
 
 
-    public WeatherAdapter(ArrayList<WeeklyWeatherReport> weeklyWeatherReport, Context context) {
+    WeatherAdapter(ArrayList<WeeklyWeatherReport> weeklyWeatherReport, Context context) {
         this.weeklyWeatherReports = weeklyWeatherReport;
         this.context = context;
     }
