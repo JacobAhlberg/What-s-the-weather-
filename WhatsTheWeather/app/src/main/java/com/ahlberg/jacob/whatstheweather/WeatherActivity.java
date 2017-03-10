@@ -1,9 +1,12 @@
 package com.ahlberg.jacob.whatstheweather;
 
 import android.Manifest;
+
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -12,9 +15,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +38,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,26 +53,28 @@ import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, LocationListener {
-    final static String TAG = "TAG";
 
     final String URL_BASE = "https://api.darksky.net/forecast/";
     final String URL_API_KEY = "6c068b0a84758c6c217c0bce95c85504";
     final OkHttpClient okHttpClient = new OkHttpClient();
 
+    private String today;
     private GoogleApiClient mGoogleApiClient;
     private final int PERMISSION_LOCATION = 111;
     private ArrayList<DailyWeatherReport> weatherReports = new ArrayList<>();
     private ArrayList<WeeklyWeatherReport> weeklyWeatherReports = new ArrayList<>();
-    private boolean celcius = true;
+    private List<Day> days;
+    private boolean celsius = true;
 
-    @BindView(R.id.weatherIcon) ImageView weatherIcon;
-    @BindView(R.id.weatherDate) TextView weatherDate;
-    @BindView(R.id.currentTemp) TextView currentTemp;
-    @BindView(R.id.cityCountry) TextView cityCountry;
-    @BindView(R.id.weatherDescription) TextView weatherDescription;
-    @BindView(R.id.navigation) BottomNavigationView mBottomNav;
+    @BindView(R.id.weatherIcon)             ImageView weatherIcon;
+    @BindView(R.id.weatherDate)             TextView weatherDate;
+    @BindView(R.id.currentTemp)             TextView currentTemp;
+    @BindView(R.id.cityCountry)             TextView cityCountry;
+    @BindView(R.id.weatherDescription)      TextView weatherDescription;
+    @BindView(R.id.navigation)              BottomNavigationView mBottomNav;
     @BindView(R.id.content_weather_reports) RecyclerView recyclerView;
-    @BindView(R.id.my_toolbar) Toolbar myToolbar;
+    @BindView (R.id.settingsBtn)            ImageButton settingsBtn;
+    @BindView(R.id.my_toolbar)              Toolbar myToolbar;
 
     WeatherAdapter mWeatherAdapter;
 
@@ -81,11 +88,44 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        celsius = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("degrees", false);
+
+        Intent checkInternetIntent = new Intent();
+        checkInternetIntent.setAction("internet");
+        sendBroadcast(checkInternetIntent);
+
+
         mWeatherAdapter = new WeatherAdapter(weeklyWeatherReports, this);
         recyclerView.setAdapter(mWeatherAdapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(WeatherActivity.this, settingsBtn);
+                popupMenu.getMenuInflater()
+                        .inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        String menuItem = "" + item.getTitle();
+                        switch (menuItem){
+                            case "Settings" :
+                                Intent intent = new Intent(WeatherActivity.this,
+                                        SettingsActivity.class);
+                                intent.putExtra("today", today);
+                                startActivity(intent);
+                        }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
+            }
+        });
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -96,11 +136,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     void downloadWeatherData(Location location) {
-        //https://api.darksky.net/forecast/6c068b0a84758c6c217c0bce95c85504/42.3601,-71.0589
-        final String fullCoords = "/" + location.getLatitude() + "," + location.getLongitude();
-        final String url = URL_BASE + URL_API_KEY + fullCoords;
-
-        Log.e("URL________________", url);
+        final String fullCoordinates = "/" + location.getLatitude() + "," + location.getLongitude();
+        final String url = URL_BASE + URL_API_KEY + fullCoordinates;
 
         Request request = new Request.Builder()
                 .url(url)
@@ -129,23 +166,14 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 double temperatureFahrenheit = forecast
                         .getCurrentlyWeatherReport()
                         .getTemperature();
-                int temperature = fahrenheitToCelcius(temperatureFahrenheit);
+                int temperature = DailyWeatherReport.fahrenheitToCelsius(celsius, temperatureFahrenheit);
 
                 DailyWeatherReport dailyReport = new DailyWeatherReport(timeZone,
                         weatherDescription, weatherIcon, latitude, longitude, temperature);
                 weatherReports.add(dailyReport);
 
-                List<Day> days = forecast.getWeeklyWeather().getWeeklyDays();
-
-                for (Day day: days){
-                    double fahrenheitMinTemp = day.getTemperatureMin();
-                    int tempMin = fahrenheitToCelcius(fahrenheitMinTemp);
-                    fahrenheitMinTemp = day.getTemperatureMax();
-                    int tempMax = fahrenheitToCelcius(fahrenheitMinTemp);
-                    WeeklyWeatherReport weeklyWeatherReport = new WeeklyWeatherReport(day.getSummary(),
-                            day.getIcon(), tempMin, tempMax);
-                    weeklyWeatherReports.add(weeklyWeatherReport);
-                }
+                days = forecast.getWeeklyWeather().getWeeklyDays();
+                setDaysData(days);
 
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -158,9 +186,16 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         });
     }
 
-    public static String getDayOfWeek(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("EEEE");
-        return format.format(date);
+    void setDaysData(List<Day> daysData){
+        for (Day day: days){
+            double fahrenheitMinTemp = day.getTemperatureMin();
+            int tempMin = DailyWeatherReport.fahrenheitToCelsius(celsius, fahrenheitMinTemp);
+            fahrenheitMinTemp = day.getTemperatureMax();
+            int tempMax = DailyWeatherReport.fahrenheitToCelsius(celsius, fahrenheitMinTemp);
+            WeeklyWeatherReport weeklyWeatherReport = new WeeklyWeatherReport(day.getSummary(),
+                    day.getIcon(), tempMin, tempMax);
+            weeklyWeatherReports.add(weeklyWeatherReport);
+        }
     }
 
     public void updateUI() {
@@ -170,18 +205,15 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
             Drawable drawable = report.getDrawable(this);
             weatherIcon.setImageDrawable(drawable);
 
-            String day = getDayOfWeek(Calendar.getInstance().getTime());
+            String day = DailyWeatherReport
+                    .getDayOfWeek(Calendar.getInstance().getTime());
+            today = day;
             String temperature = "" + report.getTemperature() + "°";
             currentTemp.setText(temperature);
             weatherDate.setText(day);
             cityCountry.setText(report.getLocation());
             weatherDescription.setText(report.getWeatherDescription());
         }
-    }
-
-    private int fahrenheitToCelcius(double temperature){
-        if (celcius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
-        else  return (int) temperature;
     }
 
     @Override
@@ -201,7 +233,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {   }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
     @Override
     public void onConnectionSuspended(int i) {}
@@ -211,9 +243,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
             LocationRequest req = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, req, this);
 
-        } catch (SecurityException exception) {
-
-        }
+        } catch (SecurityException ignored) { }
     }
 
     @Override
@@ -229,5 +259,19 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 }
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (weeklyWeatherReports != null)   weeklyWeatherReports.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!celsius)
+
+        mWeatherAdapter.notifyDataSetChanged();
     }
 }

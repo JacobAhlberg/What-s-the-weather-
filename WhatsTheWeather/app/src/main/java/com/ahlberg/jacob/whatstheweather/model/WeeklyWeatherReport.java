@@ -1,10 +1,14 @@
 package com.ahlberg.jacob.whatstheweather.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
 import com.ahlberg.jacob.whatstheweather.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ${User} on 2017-03-09.
@@ -13,19 +17,19 @@ import com.ahlberg.jacob.whatstheweather.R;
  */
 
 public class WeeklyWeatherReport {
-    public final static String WEATHER_TYPE_CLEAR_DAY = "clear-day";
-    public final static String WEATHER_TYPE_CLEAR_NIGHT = "clear-night";
-    public final static String WEATHER_TYPE_RAIN = "rain";
-    public final static String WEATHER_TYPE_SNOW = "snow";
-    public final static String WEATHER_TYPE_SLEET = "sleet";
-    public final static String WEATHER_TYPE_WIND = "wind";
-    public final static String WEATHER_TYPE_FOG = "fog";
-    public final static String WEATHER_TYPE_CLOUDY = "cloudy";
-    public final static String WEATHER_TYPE_CLOUDY_DAY = "partly-cloudy-day";
-    public final static String WEATHER_TYPE_CLOUDY_NIGHT = "partly-cloudy-night";
-    public final static String WEATHER_TYPE_HAIL = "hail";
-    public final static String WEATHER_TYPE_LIGHTNING = "thunderstorm";
-    public final static String WEATHER_TYPE_TORNADO = "tornado";
+    private final static String WEATHER_TYPE_CLEAR_DAY = "clear-day";
+    private final static String WEATHER_TYPE_CLEAR_NIGHT = "clear-night";
+    private final static String WEATHER_TYPE_RAIN = "rain";
+    private final static String WEATHER_TYPE_SNOW = "snow";
+    private final static String WEATHER_TYPE_SLEET = "sleet";
+    private final static String WEATHER_TYPE_WIND = "wind";
+    private final static String WEATHER_TYPE_FOG = "fog";
+    private final static String WEATHER_TYPE_CLOUDY = "cloudy";
+    private final static String WEATHER_TYPE_CLOUDY_DAY = "partly-cloudy-day";
+    private final static String WEATHER_TYPE_CLOUDY_NIGHT = "partly-cloudy-night";
+    private final static String WEATHER_TYPE_HAIL = "hail";
+    private final static String WEATHER_TYPE_LIGHTNING = "thunderstorm";
+    private final static String WEATHER_TYPE_TORNADO = "tornado";
 
     private String summary;
     private String icon;
@@ -74,9 +78,5 @@ public class WeeklyWeatherReport {
             case WEATHER_TYPE_TORNADO:      return ContextCompat.getDrawable(context, R.drawable.list_cloudy); // NEW PICTURE PLEASE
             default:                        return ContextCompat.getDrawable(context, R.drawable.list_sunny);
         }
-
-
     }
-
-
 }
