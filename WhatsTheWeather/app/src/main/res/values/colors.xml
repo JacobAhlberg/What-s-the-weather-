@@ -4,8 +4,6 @@
     <color name="colorPrimaryDark">#041a20</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorNavigationBar">#f0f0f0</color>
-    <color name="backgroundColor">#034a8c</color>
     <color name="textColor">#f6f6f6</color>
-    <color name="listViewBackground">#ffffff</color>
-    <color name="actionbarColor">#0066a1</color>
+    <color name="actionbarColor">#003182</color>
 </resources>

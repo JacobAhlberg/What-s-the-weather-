@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="110dp"
     android:background="#ECECEC">
 
 
@@ -11,82 +11,88 @@
         android:id="@+id/list_weather_icon"
         android:layout_width="61dp"
         android:layout_height="66dp"
-        card_view:srcCompat="@drawable/whats_the_weather_logo"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/icon"
+        card_view:layout_constraintBottom_toTopOf="@+id/line"
         card_view:layout_constraintLeft_toLeftOf="parent"
         card_view:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        card_view:layout_constraintBottom_toTopOf="@+id/imageView" />
+        card_view:layout_constraintVertical_bias="0.222"
+        card_view:srcCompat="@drawable/whats_the_weather_logo"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/list_weather_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:text="Tomorrow"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/date"
         android:textSize="20sp"
         card_view:layout_constraintLeft_toRightOf="@+id/list_weather_icon"
-        card_view:layout_constraintTop_toTopOf="@+id/list_weather_icon"
-        android:layout_marginTop="8dp" />
+        card_view:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/list_weather_description"
-        android:layout_width="wrap_content"
+        android:layout_width="172dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="0dp"
-        android:text="Clear"
-        android:textSize="15sp"
-        card_view:layout_constraintRight_toRightOf="@+id/list_weather_day"
-        android:layout_marginLeft="0dp"
-        card_view:layout_constraintLeft_toLeftOf="@+id/list_weather_day"
-        android:layout_marginTop="2dp"
-        card_view:layout_constraintTop_toBottomOf="@+id/list_weather_day"
-        card_view:layout_constraintHorizontal_bias="0.0"
-        card_view:layout_constraintBottom_toBottomOf="@+id/list_weather_icon"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/weatherDescription"
+        android:textSize="12sp"
+        card_view:layout_constraintBottom_toBottomOf="@+id/list_weather_icon"
+        card_view:layout_constraintHorizontal_bias="0.0"
+        card_view:layout_constraintLeft_toLeftOf="@+id/list_weather_day"
+        card_view:layout_constraintRight_toRightOf="@+id/list_weather_day"
+        card_view:layout_constraintTop_toBottomOf="@+id/list_weather_day"
         card_view:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/list_temp_high"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="right"
-        android:text="26º"
+        android:layout_width="66dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:gravity="end"
+        android:text="@string/maxTemp"
         android:textSize="20sp"
+        card_view:layout_constraintHorizontal_bias="1.0"
         card_view:layout_constraintLeft_toRightOf="@+id/list_weather_day"
         card_view:layout_constraintRight_toRightOf="parent"
-        card_view:layout_constraintHorizontal_bias="0.0"
-        card_view:layout_constraintBaseline_toBaselineOf="@+id/list_weather_day" />
+        card_view:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/list_temp_low"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
-        android:gravity="right"
-        android:text="22º"
+        android:layout_width="65dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="-32dp"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:text="@string/lowTemp"
         android:textSize="15sp"
+        card_view:layout_constraintHorizontal_bias="0.75"
         card_view:layout_constraintLeft_toLeftOf="@+id/list_temp_high"
-        card_view:layout_constraintRight_toRightOf="parent"
-        card_view:layout_constraintHorizontal_bias="0.0"
-        card_view:layout_constraintBaseline_toBaselineOf="@+id/list_weather_description" />
+        card_view:layout_constraintRight_toRightOf="@+id/list_temp_high"
+        card_view:layout_constraintTop_toBottomOf="@+id/list_temp_high" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/line"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
+        android:contentDescription="@string/line"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintHorizontal_bias="0.0"
         card_view:layout_constraintLeft_toLeftOf="parent"
         card_view:layout_constraintRight_toRightOf="parent"
-        card_view:srcCompat="@drawable/line"
-        tools:layout_editor_absoluteY="108dp" />
+        card_view:srcCompat="@drawable/line" />
 
 </android.support.constraint.ConstraintLayout>
