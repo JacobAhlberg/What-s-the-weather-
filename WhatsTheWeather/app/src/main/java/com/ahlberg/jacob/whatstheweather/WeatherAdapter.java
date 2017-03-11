@@ -53,17 +53,8 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
         holder.tempHigh.setText(tempMax);
 
         holder.weatherDescription.setText(report.getSummary());
-        switch (position){
-            case 0: whichDay = 1; break;
-            case 1: whichDay = 2; break;
-            case 2: whichDay = 3; break;
-            case 3: whichDay = 4; break;
-            case 4: whichDay = 5; break;
-            case 5: whichDay = 6; break;
-            case 6: whichDay = 7; break;
-            default: whichDay = 8; break;
-        }
-        String day = WeeklyWeatherReport.getDaysOfWeek(whichDay);
+
+        String day = WeeklyWeatherReport.getDaysOfWeek(position + 1);
         holder.weatherDate.setText(day);
 
     }
