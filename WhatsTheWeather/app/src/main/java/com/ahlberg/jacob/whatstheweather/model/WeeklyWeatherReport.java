@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import com.ahlberg.jacob.whatstheweather.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -94,6 +95,19 @@ public class WeeklyWeatherReport {
             return tempMax;
         }
         return tempMax;
+    }
+
+    public static String getDaysOfWeek(int day) {
+        @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat format = new SimpleDateFormat("EEE, MMMM d");
+
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, day);
+        dt = c.getTime();
+
+        return format.format(dt);
     }
 
 }

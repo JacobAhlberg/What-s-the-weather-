@@ -24,21 +24,6 @@
 
         />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:adjustViewBounds="true"
-        android:baselineAlignBottom="false"
-        android:contentDescription="@string/backgorundforest"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/forest" />
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -95,7 +80,7 @@
         android:layout_marginTop="0dp"
         android:contentDescription="@string/weatherLogo"
         android:scaleType="fitStart"
-        app:layout_constraintRight_toRightOf="@+id/imageView"
+        app:layout_constraintRight_toRightOf="@+id/forest"
         app:layout_constraintTop_toTopOf="@+id/currentTemp"
         app:srcCompat="@drawable/cloudy"
         android:layout_marginBottom="8dp"
@@ -176,6 +161,21 @@
         app:layout_constraintRight_toLeftOf="@+id/settingsBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/forest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:adjustViewBounds="true"
+        android:baselineAlignBottom="false"
+        android:contentDescription="@string/backgorundforest"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/forest" />
 
 
 </android.support.constraint.ConstraintLayout>

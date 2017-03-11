@@ -10,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
+import com.ahlberg.jacob.whatstheweather.model.WeeklyWeather;
 import com.ahlberg.jacob.whatstheweather.model.WeeklyWeatherReport;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Jacob on 2017-03-05.
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
     private Context context;
     private ArrayList<WeeklyWeatherReport> weeklyWeatherReports;
+    private int whichDay = 1;
 
 
     WeatherAdapter(ArrayList<WeeklyWeatherReport> weeklyWeatherReport, Context context) {
@@ -43,18 +47,25 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
 
         Boolean degree = PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean("degrees", false);
-        Toast.makeText(context, "" + degree, Toast.LENGTH_LONG).show();
-
-        String tempMin = "" + WeeklyWeatherReport.getRightDegreeMin(report
-                .getTemperatureMin(), degree);
-        Toast.makeText(context, tempMin, Toast.LENGTH_LONG).show();
+        String tempMin = "" + WeeklyWeatherReport.getRightDegreeMin(report.getTemperatureMin(), degree);
         holder.tempLow.setText(tempMin);
-
-        String tempMax = "" + WeeklyWeatherReport.getRightDegreeMax(report
-                .getTemperatureMax(), degree);
+        String tempMax = "" + WeeklyWeatherReport.getRightDegreeMax(report.getTemperatureMax(), degree);
         holder.tempHigh.setText(tempMax);
+
         holder.weatherDescription.setText(report.getSummary());
-        holder.weatherDate.setText("HEJ");
+        switch (position){
+            case 0: whichDay = 1; break;
+            case 1: whichDay = 2; break;
+            case 2: whichDay = 3; break;
+            case 3: whichDay = 4; break;
+            case 4: whichDay = 5; break;
+            case 5: whichDay = 6; break;
+            case 6: whichDay = 7; break;
+            default: whichDay = 8; break;
+        }
+        String day = WeeklyWeatherReport.getDaysOfWeek(whichDay);
+        holder.weatherDate.setText(day);
+
     }
 
     @Override

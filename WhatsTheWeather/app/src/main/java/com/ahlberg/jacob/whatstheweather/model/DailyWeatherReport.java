@@ -4,16 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.ahlberg.jacob.whatstheweather.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Jacob on 2017-03-01.
+ * What's The Weather?
+ * Darksky API
  */
 
 public class DailyWeatherReport {

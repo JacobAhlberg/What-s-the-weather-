@@ -117,6 +117,11 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                                         SettingsActivity.class);
                                 intent.putExtra("today", today);
                                 startActivity(intent);
+                                break;
+                            case "Help" :
+                                Toast.makeText(WeatherActivity.this, "Not yet implemented", Toast.LENGTH_LONG)
+                                        .show();
+                                break;
                         }
                         return false;
                     }
@@ -264,6 +269,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onResume() {
         super.onResume();
+
         mWeatherAdapter.notifyDataSetChanged();
     }
 
