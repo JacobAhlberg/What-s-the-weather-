@@ -119,9 +119,9 @@ public class DailyWeatherReport {
         return format.format(date);
     }
 
-    public static int fahrenheitToCelsius(boolean celsius, double temperature){
+    public static int fahrenheitToCelsius(boolean celsius, int temperature){
         if (celsius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
-        else  return (int) (temperature + 0.5);
+        else  return temperature;
     }
 
 }

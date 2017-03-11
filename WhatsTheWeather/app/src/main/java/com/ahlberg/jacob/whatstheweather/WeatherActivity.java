@@ -216,7 +216,8 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     .getDayOfWeek(Calendar.getInstance().getTime());
             today = day;
 
-            String temperature = report.getTemperature() + "°";
+            int degrees = DailyWeatherReport.fahrenheitToCelsius(celsius, report.getTemperature());
+            String temperature = degrees + "°";
             currentTemp.setText(temperature);
             weatherDate.setText(day);
             cityCountry.setText(report.getLocation());
@@ -279,6 +280,9 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onResume() {
         super.onResume();
+        celsius = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("degrees", false);
+        updateUI();
         mWeatherAdapter.notifyDataSetChanged();
     }
 

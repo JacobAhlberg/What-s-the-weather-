@@ -50,13 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 editor.apply();
-
-
             }
         });
-
-
-
-
     }
 }
