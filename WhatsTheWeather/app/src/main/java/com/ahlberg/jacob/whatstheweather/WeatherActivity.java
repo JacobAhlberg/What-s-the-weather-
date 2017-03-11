@@ -178,7 +178,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 double temperatureFahrenheit = forecast
                         .getCurrentlyWeatherReport()
                         .getTemperature();
-                int temperature = DailyWeatherReport.fahrenheitToCelsius(celsius, temperatureFahrenheit);
+                int temperature = (int) (temperatureFahrenheit + 0.5);
 
                 DailyWeatherReport dailyReport = new DailyWeatherReport(timeZone,
                         weatherDescription, weatherIcon, latitude, longitude, temperature);
@@ -215,13 +215,15 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
             String day = DailyWeatherReport
                     .getDayOfWeek(Calendar.getInstance().getTime());
             today = day;
-            String temperature = "" + report.getTemperature() + "°";
+
+            String temperature = report.getTemperature() + "°";
             currentTemp.setText(temperature);
             weatherDate.setText(day);
             cityCountry.setText(report.getLocation());
             weatherDescription.setText(report.getWeatherDescription());
         }
     }
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -277,7 +279,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onResume() {
         super.onResume();
-
         mWeatherAdapter.notifyDataSetChanged();
     }
 

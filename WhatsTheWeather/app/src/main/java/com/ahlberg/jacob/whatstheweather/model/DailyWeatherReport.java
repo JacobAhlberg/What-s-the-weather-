@@ -121,7 +121,7 @@ public class DailyWeatherReport {
 
     public static int fahrenheitToCelsius(boolean celsius, double temperature){
         if (celsius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
-        else  return (int) temperature;
+        else  return (int) (temperature + 0.5);
     }
 
 }
