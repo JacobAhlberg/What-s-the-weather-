@@ -20,6 +20,7 @@
     <string name="settings">Settings</string>
     <string name="aboutText">This is a weather application using Darksky.net API. It will locate you current location and show weather data for upcoming week. Press the button to go to Darksky\'s website.</string>
     <string name="weekDay">Weekday</string>
+    <string name="add_to_favourites">Add to favourites</string>
 
     <!-- Strings related to Settings -->
 

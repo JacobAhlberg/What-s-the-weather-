@@ -2,6 +2,7 @@ package com.ahlberg.jacob.whatstheweather;
 
 import android.Manifest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import android.location.Location;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -74,6 +76,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @BindView(R.id.content_weather_reports) RecyclerView recyclerView;
     @BindView (R.id.settingsBtn)            ImageButton settingsBtn;
     @BindView(R.id.my_toolbar)              Toolbar myToolbar;
+    @BindView(R.id.activity_weather)        ConstraintLayout background;
 
     WeatherAdapter mWeatherAdapter;
 
@@ -82,6 +85,11 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
+
+        Boolean late = DailyWeatherReport.getTimeOfTheDay();
+        if (!late) background.setBackground(ContextCompat.getDrawable(this,
+                R.drawable.morning_background));
+
 
         setSupportActionBar(myToolbar);
         //noinspection ConstantConditions

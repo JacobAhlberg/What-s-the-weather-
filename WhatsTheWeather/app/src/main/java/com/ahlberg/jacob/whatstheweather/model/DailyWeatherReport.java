@@ -4,10 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.ahlberg.jacob.whatstheweather.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -99,6 +107,12 @@ public class DailyWeatherReport {
 
     }
 
+    public static boolean getTimeOfTheDay() {
+        LocalTime now = LocalTime.now();
+        LocalTime limit = new LocalTime("15:00");
+        return now.isAfter(limit);
+    }
+
     public static String getDayOfWeek(Date date) {
         @SuppressLint("SimpleDateFormat")   //Getting the current day
                 SimpleDateFormat format = new SimpleDateFormat("EEEE");
@@ -109,6 +123,5 @@ public class DailyWeatherReport {
         if (celsius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
         else  return (int) temperature;
     }
-
 
 }
