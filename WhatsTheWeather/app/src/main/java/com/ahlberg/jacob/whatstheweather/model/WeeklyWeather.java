@@ -10,9 +10,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by ${User} on 2017-03-09.
+ * Created by Jacob on 2017-03-08.
  * What's The Weather?
- * SMHI API
+ * Darksky API
  */
 
 public class WeeklyWeather{

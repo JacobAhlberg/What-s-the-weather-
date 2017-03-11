@@ -12,9 +12,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by ${User} on 2017-03-09.
+ * Created by Jacob on 2017-03-09.
  * What's The Weather?
- * SMHI API
+ * Darksky API
  */
 
 public class WeeklyWeatherReport {

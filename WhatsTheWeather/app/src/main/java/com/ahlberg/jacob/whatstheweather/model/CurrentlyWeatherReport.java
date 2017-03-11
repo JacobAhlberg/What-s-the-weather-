@@ -3,9 +3,9 @@ package com.ahlberg.jacob.whatstheweather.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by ${User} on 2017-03-08.
+ * Created by Jacob on 2017-03-08.
  * What's The Weather?
- * SMHI API
+ * Darksky API
  */
 
 public class CurrentlyWeatherReport {

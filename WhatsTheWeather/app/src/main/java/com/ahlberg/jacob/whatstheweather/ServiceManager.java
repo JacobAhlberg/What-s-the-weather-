@@ -6,9 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by ${User} on 2017-03-10.
+ * Created by Jacob on 2017-03-10.
  * What's The Weather?
- * SMHI API
+ * Darksky API
  */
 
 public class ServiceManager extends ContextWrapper {
