@@ -1,10 +1,13 @@
 package com.ahlberg.jacob.whatstheweather;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ahlberg.jacob.whatstheweather.model.DailyWeatherReport;
 import com.ahlberg.jacob.whatstheweather.model.WeeklyWeatherReport;
@@ -37,9 +40,18 @@ class WeatherAdapter extends RecyclerView.Adapter<WeatherReportViewHolder> {
     public void onBindViewHolder(WeatherReportViewHolder holder, int position) {
         WeeklyWeatherReport report = weeklyWeatherReports.get(position);
         holder.weatherIcon.setImageDrawable(report.getDrawableToList(context));
-        String tempMin = "" + report.getTemperatureMin();
+
+        Boolean degree = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("degrees", false);
+        Toast.makeText(context, "" + degree, Toast.LENGTH_LONG).show();
+
+        String tempMin = "" + WeeklyWeatherReport.getRightDegreeMin(report
+                .getTemperatureMin(), degree);
+        Toast.makeText(context, tempMin, Toast.LENGTH_LONG).show();
         holder.tempLow.setText(tempMin);
-        String tempMax = "" + report.getTemperatureMax();
+
+        String tempMax = "" + WeeklyWeatherReport.getRightDegreeMax(report
+                .getTemperatureMax(), degree);
         holder.tempHigh.setText(tempMax);
         holder.weatherDescription.setText(report.getSummary());
         holder.weatherDate.setText("HEJ");

@@ -79,4 +79,21 @@ public class WeeklyWeatherReport {
             default:                        return ContextCompat.getDrawable(context, R.drawable.list_sunny);
         }
     }
+
+    public static int getRightDegreeMin(int tempMin, boolean degree){
+        if (degree){
+            tempMin = (int) ((((tempMin - 32) * 5) / 9) + 0.5);
+            return tempMin;
+        }
+        return tempMin;
+    }
+
+    public static int getRightDegreeMax(int tempMax, boolean degree){
+        if (degree){
+            tempMax = (int) ((((tempMax - 32) * 5) / 9) + 0.5);
+            return tempMax;
+        }
+        return tempMax;
+    }
+
 }

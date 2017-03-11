@@ -18,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -173,7 +172,14 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 weatherReports.add(dailyReport);
 
                 days = forecast.getWeeklyWeather().getWeeklyDays();
-                setDaysData(days);
+
+                for (Day day: days){
+                    int tempMin = (int) day.getTemperatureMin();
+                    int tempMax = (int) day.getTemperatureMax();
+                    WeeklyWeatherReport weeklyWeatherReport = new WeeklyWeatherReport(day.getSummary(),
+                            day.getIcon(), tempMin, tempMax);
+                    weeklyWeatherReports.add(weeklyWeatherReport);
+                }
 
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -184,18 +190,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 });
             }
         });
-    }
-
-    void setDaysData(List<Day> daysData){
-        for (Day day: days){
-            double fahrenheitMinTemp = day.getTemperatureMin();
-            int tempMin = DailyWeatherReport.fahrenheitToCelsius(celsius, fahrenheitMinTemp);
-            fahrenheitMinTemp = day.getTemperatureMax();
-            int tempMax = DailyWeatherReport.fahrenheitToCelsius(celsius, fahrenheitMinTemp);
-            WeeklyWeatherReport weeklyWeatherReport = new WeeklyWeatherReport(day.getSummary(),
-                    day.getIcon(), tempMin, tempMax);
-            weeklyWeatherReports.add(weeklyWeatherReport);
-        }
     }
 
     public void updateUI() {
@@ -270,8 +264,7 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onResume() {
         super.onResume();
-        if (!celsius)
-
         mWeatherAdapter.notifyDataSetChanged();
     }
+
 }
