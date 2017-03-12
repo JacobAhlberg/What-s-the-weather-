@@ -59,7 +59,7 @@ public class DailyWeatherReport {
         this.temperature = temperature;
     }
 
-    private String location(String timeZone){
+    public static String location(String timeZone){
         String[] split = timeZone.split("/");
         return split[1];
     }
