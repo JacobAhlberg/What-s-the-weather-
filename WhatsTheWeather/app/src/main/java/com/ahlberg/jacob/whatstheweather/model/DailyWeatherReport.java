@@ -123,5 +123,4 @@ public class DailyWeatherReport {
         if (celsius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
         else  return temperature;
     }
-
 }
