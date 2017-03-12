@@ -39,7 +39,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".FavouritesActivity"></activity>
+        <activity
+            android:name=".FavouritesActivity"
+            android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>

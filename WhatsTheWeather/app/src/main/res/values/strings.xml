@@ -35,6 +35,7 @@
     <string name="latitude" >Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="weather_content">weatherContentThroughoutWeek</string>
+    <string name="city">City</string>
 
     <!-- Strings related to Settings -->
 

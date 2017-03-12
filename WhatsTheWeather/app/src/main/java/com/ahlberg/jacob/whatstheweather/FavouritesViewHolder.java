@@ -18,28 +18,29 @@ import butterknife.ButterKnife;
  */
 
 public class FavouritesViewHolder extends RecyclerView.ViewHolder {
+
     View mView;
-    @BindView(R.id.removeButton)            Button removeBtn;
-    @BindView(R.id.cityView)                TextView cityView;
-    @BindView(R.id.latitudeResultView)      TextView latitudeResultView;
-    @BindView(R.id.longitudeResultView)     TextView longitudeResultView;
 
     public FavouritesViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
-        ButterKnife.bind(mView);
     }
 
     public void setCity(String city){
-
+        TextView cityView = (TextView)mView.findViewById(R.id.cityView);
+        cityView.setText(city);
     }
 
     public void setLatitudeResult(double latitudeResult){
-
+        TextView latitudeResultView = (TextView)mView.findViewById(R.id.latitudeResultView);
+        String latitude = "" + latitudeResult;
+        latitudeResultView.setText(latitude);
     }
 
     public void setLongitudeResult(double longitudeResult){
-
+        TextView longitudeResultView = (TextView)mView.findViewById(R.id.longitudeResultView);
+        String longitude = "" + longitudeResult;
+        longitudeResultView.setText(longitude);
     }
 
 

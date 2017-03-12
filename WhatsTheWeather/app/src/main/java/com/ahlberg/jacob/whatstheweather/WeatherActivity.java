@@ -297,6 +297,4 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-
-
 }

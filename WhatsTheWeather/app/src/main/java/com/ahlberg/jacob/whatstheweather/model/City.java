@@ -9,23 +9,37 @@ package com.ahlberg.jacob.whatstheweather.model;
 public class City {
     private double latitude;
     private double longitude;
-    private String cityName;
+    private String city;
 
-    public City(double latitude, double longitude, String cityName) {
+    public City() {}
+
+    public City(double latitude, double longitude, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.cityName = cityName;
+        this.city = city;
     }
 
     public double getLatitude() {
         return latitude;
     }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public double getLongitude() {
         return longitude;
     }
 
-    public String getCityName() {
-        return cityName;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
