@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "763113330357",
+    "firebase_url": "https://whatstheweather-1488889077804.firebaseio.com",
+    "project_id": "whatstheweather-1488889077804",
+    "storage_bucket": "whatstheweather-1488889077804.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763113330357:android:fd51de27132c27f8",
+        "android_client_info": {
+          "package_name": "com.ahlberg.jacob.whatstheweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763113330357-ckc7q88l585ivhkp76t85ftqa6gjs2sk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahlberg.jacob.whatstheweather",
+            "certificate_hash": "63e7d27739dc50557407140f0d03e2cdf248c36c"
+          }
+        },
+        {
+          "client_id": "763113330357-sbufhulca5j21lkr2ckrqup83tp38esd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4LxTtMPaFVS-TUO4O_E95_NgV8x2CJ00"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763113330357-sbufhulca5j21lkr2ckrqup83tp38esd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

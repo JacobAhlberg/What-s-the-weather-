@@ -14,7 +14,7 @@ public class NetworkReceiver extends BroadcastReceiver {
         else                        Toast.makeText(context, "Network not available",Toast.LENGTH_LONG).show();
     }
 
-    boolean checkInternet(Context context) {
+    private boolean checkInternet(Context context) {
         ServiceManager serviceManager = new ServiceManager(context);
         return serviceManager.isNetworkAvailable();
     }

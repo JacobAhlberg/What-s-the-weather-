@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/whats_the_weather_logo"
@@ -40,8 +39,9 @@
             </intent-filter>
         </receiver>
 
-
-
+        <activity
+            android:name=".FavouritesActivity"
+            android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>

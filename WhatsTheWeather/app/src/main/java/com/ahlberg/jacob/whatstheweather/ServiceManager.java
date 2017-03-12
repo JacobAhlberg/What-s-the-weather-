@@ -11,7 +11,7 @@ import android.net.NetworkInfo;
  * Darksky API
  */
 
-public class ServiceManager extends ContextWrapper {
+class ServiceManager extends ContextWrapper {
 
     public ServiceManager(Context base) {
         super(base);

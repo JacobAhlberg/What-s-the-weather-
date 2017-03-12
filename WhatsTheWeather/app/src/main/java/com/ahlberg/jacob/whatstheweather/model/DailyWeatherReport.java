@@ -59,7 +59,7 @@ public class DailyWeatherReport {
         this.temperature = temperature;
     }
 
-    private String location(String timeZone){
+    public static String location(String timeZone){
         String[] split = timeZone.split("/");
         return split[1];
     }
@@ -119,9 +119,8 @@ public class DailyWeatherReport {
         return format.format(date);
     }
 
-    public static int fahrenheitToCelsius(boolean celsius, double temperature){
+    public static int fahrenheitToCelsius(boolean celsius, int temperature){
         if (celsius) return (int) ((((temperature - 32) * 5) / 9) + 0.5);
-        else  return (int) (temperature + 0.5);
+        else  return temperature;
     }
-
 }
