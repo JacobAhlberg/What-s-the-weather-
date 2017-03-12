@@ -2,7 +2,6 @@ package com.ahlberg.jacob.whatstheweather;
 
 import android.Manifest;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -11,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +70,6 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
     @BindView(R.id.currentTemp)             TextView currentTemp;
     @BindView(R.id.cityCountry)             TextView cityCountry;
     @BindView(R.id.weatherDescription)      TextView weatherDescription;
-    @BindView(R.id.navigation)              BottomNavigationView mBottomNav;
     @BindView(R.id.content_weather_reports) RecyclerView recyclerView;
     @BindView (R.id.settingsBtn)            ImageButton settingsBtn;
     @BindView(R.id.my_toolbar)              Toolbar myToolbar;
@@ -120,21 +117,26 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                     public boolean onMenuItemClick(MenuItem item) {
                         String menuItem = "" + item.getTitle();
                         switch (menuItem){
-                            case "Settings" :
-                                Intent intent = new Intent(WeatherActivity.this,
-                                        SettingsActivity.class);
-                                intent.putExtra("today", today);
-                                startActivity(intent);
+                            case "Search":
+                                Toast.makeText(WeatherActivity.this, "Not yet implemented", Toast.LENGTH_LONG).show();
                                 break;
-                            case "Help" :
-                                Toast.makeText(WeatherActivity.this, "Not yet implemented", Toast.LENGTH_LONG)
-                                        .show();
+                            case "Favourites":
+                                Intent favouriteIntent = new Intent(WeatherActivity.this, FavouritesActivity.class);
+                                startActivity(favouriteIntent);
+                                break;
+
+                            case "Settings":
+                                Intent settingsIntent = new Intent(WeatherActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("today", today);
+                                startActivity(settingsIntent);
+                                break;
+                            case "Help":
+                                Toast.makeText(WeatherActivity.this, "Not yet implemented", Toast.LENGTH_LONG).show();
                                 break;
                         }
                         return false;
                     }
                 });
-
                 popupMenu.show();
             }
         });
@@ -147,6 +149,11 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
                 .build();
     }
 
+    /*
+    * Gets the current location to grab the data from Darksky.net
+    * On response, convert the JSON and then by using Gson we can grab the data
+    * easily from the classes i've made.
+    * */
     void downloadWeatherData(Location location) {
         final String fullCoordinates = "/" + location.getLatitude() + "," + location.getLongitude();
         final String url = URL_BASE + URL_API_KEY + fullCoordinates;
@@ -285,5 +292,11 @@ public class WeatherActivity extends AppCompatActivity implements GoogleApiClien
         updateUI();
         mWeatherAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 
 }
